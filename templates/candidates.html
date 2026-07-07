@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Candidates</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-page">
+
+<div class="container">
+
+    <h1>All Candidates</h1>
+
+    <p class="subtitle">
+        List of all analyzed resumes
+    </p>
+
+    <!-- Search -->
+
+    <form action="/candidates" method="GET" class="search-form">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search by Name, Email or Job Role..."
+        value="{{ search }}">
+
+    <select name="job_role">
+
+    <option value="">All Domains</option>
+
+    {% for role in job_roles %}
+
+        <option value="{{ role[0] }}"
+            {% if job_role == role[0] %}selected{% endif %}>
+
+            {{ role[0] }}
+
+        </option>
+
+    {% endfor %}
+
+</select>
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+    <!-- Filter Buttons -->
+
+    <div class="filter-buttons">
+
+        <a href="/candidates">
+            <button type="button">All</button>
+        </a>
+
+        <a href="/candidates?status=Shortlisted">
+            <button type="button">Shortlisted</button>
+        </a>
+
+        <a href="/candidates?status=Not+Shortlisted">
+            <button type="button">Not Shortlisted</button>
+        </a>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="stats-container">
+
+        <div class="stat-card">
+            <h3>Total Candidates</h3>
+            <p>{{ total_candidates }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Shortlisted</h3>
+            <p>{{ shortlisted }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Not Shortlisted</h3>
+            <p>{{ not_shortlisted }}</p>
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="/export">
+        <button type="button">
+            Export to Excel
+        </button>
+    </a>
+
+    <br><br>
+
+    <!-- Candidate Table -->
+
+    <div class="table-container">
+
+        <table class="candidate-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Candidate Name</th>
+                    <th>Job Role</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>ATS Score</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% if candidates %}
+
+                {% for candidate in candidates %}
+
+                <tr>
+
+                    <td>{{ candidate[0] }}</td>
+
+                    <td>{{ candidate[1] }}</td>
+
+                    <td>{{ candidate[8] }}</td>
+
+                    <td>{{ candidate[6] }}</td>
+
+                    <td>{{ candidate[7] }}</td>
+
+                    <td>
+
+                        {% if candidate[2] >= 70 %}
+
+                            <span class="score-green">
+                                {{ candidate[2] }}%
+                            </span>
+
+                        {% elif candidate[2] >= 50 %}
+
+                            <span class="score-orange">
+                                {{ candidate[2] }}%
+                            </span>
+
+                        {% else %}
+
+                            <span class="score-red">
+                                {{ candidate[2] }}%
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if candidate[3] == "Shortlisted" %}
+
+                            <span class="status-green">
+                                {{ candidate[3] }}
+                            </span>
+
+                        {% else %}
+
+                            <span class="status-red">
+                                {{ candidate[3] }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <a href="/candidate/{{ candidate[0] }}">
+                            <button class="view-btn">
+                                View
+                            </button>
+                        </a>
+
+                        &nbsp;
+
+                        <a href="/delete/{{ candidate[0] }}"
+                           onclick="return confirm('Delete this candidate?')">
+
+                            <button class="delete-btn">
+                                Delete
+                            </button>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="8">
+                        No Candidates Found
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <br>
+
+    <a href="/">
+        <button type="button">
+            Back to Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>

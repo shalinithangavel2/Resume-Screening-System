@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Candidate Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Candidate Details</h1>
+
+<div class="card">
+
+<p><strong>Candidate Name :</strong> {{ candidate[1] }}</p>
+
+<p><strong>Email :</strong> {{ candidate[6] }}</p>
+
+<p><strong>Phone :</strong> {{ candidate[7] }}</p>
+
+<p><strong>Job Role :</strong> {{ candidate[8] }}</p>
+
+<p><strong>JD Skills :</strong></p>
+
+<p>{{ candidate[9] }}</p>
+
+<p><strong>Matched Skills :</strong></p>
+
+<p>{{ candidate[4] }}</p>
+
+<p><strong>Missing Skills :</strong></p>
+
+<p>{{ candidate[5] }}</p>
+
+<p><strong>ATS Score :</strong>
+
+{{ candidate[2] }}%
+
+</p>
+
+<p><strong>Status :</strong>
+
+{{ candidate[3] }}
+
+</p>
+
+<a href="/candidates">
+
+<button>
+
+Back
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

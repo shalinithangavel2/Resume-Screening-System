@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Resume Screening System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-page">
+
+    <div class="container">
+
+       <h1> Resume Screening System</h1>
+        <p class="subtitle">
+            Upload a resume and compare with the Job Description
+        </p>
+        {% if message %}
+
+<div class="alert">
+
+    {{ message }}
+
+</div>
+
+{% endif %}
+
+        <!-- Job Description Card -->
+
+        <div class="card">
+
+            <form action="/analyze" method="POST" enctype="multipart/form-data">
+
+                <h2>Job Description</h2>
+
+                <textarea
+                    id="jobDescription"
+                    name="jobDescription"
+                    placeholder="Paste the Job Description here..."
+                    required></textarea>
+
+                <h2>Upload Resume</h2>
+
+                <input
+                    type="file"
+                    id="resumeFile"
+                    name="resumeFile"
+                    required>
+
+                <br><br>
+
+                <button
+                    type="submit"
+                    id="analyzeButton">
+                    Analyze Resume
+                </button>
+                <br><br>
+                <a href="/candidates">
+                    <button type="button">
+                         View All Candidates
+                         </button>
+                        </a>
+
+            </form>
+
+        </div>
+
+        <!-- Result Card -->
+
+        <div class="result-card" id="resultSection">
+
+            <h2>Analysis Result</h2>
+
+            <p>
+                <strong>Candidate Name :</strong>
+
+                {% if candidate_name %}
+                    {{ candidate_name }}
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+            <p>
+                <strong>Email :</strong>
+                {% if email %}
+                {{ email }}
+                 {% else %}
+                  --
+                   {% endif %}
+                </p>
+                <p>
+                     <strong>Phone :</strong>
+                     {% if phone %}
+                      {{ phone }}
+                      {% else %}
+                       --
+                        {% endif %}
+                    </p>
+
+            <p>
+                <strong>ATS Score :</strong>
+
+                {% if ats_score is not none %}
+                    {{ ats_score }}%
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Status :</strong>
+
+                {% if status %}
+                    {{ status }}
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+
+            <p><strong>Matched Skills :</strong></p>
+
+            {% if matched_skills %}
+
+            <ul>
+
+                {% for skill in matched_skills %}
+
+                <li>{{ skill }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+            {% else %}
+
+            <p>--</p>
+
+            {% endif %}
+
+            <p><strong>Missing Skills :</strong></p>
+
+            {% if missing_skills %}
+
+            <ul>
+
+                {% for skill in missing_skills %}
+
+                <li>{{ skill }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+            {% else %}
+
+            <p>--</p>
+
+            {% endif %}
+
+            <p>
+                <strong>Recommendation :</strong>
+
+                {% if recommendation %}
+                    {{ recommendation }}
+                {% else %}
+                    --
+                {% endif %}
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

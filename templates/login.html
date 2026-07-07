@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <meta charset="UTF-8" >
+       <meta name="viewport" content="width=device-width,initial-scale=1.0">
+       <title>HR LOGIN</title>
+       <link  rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body class="login-page">
+        <div class="login-container">
+            <h1>HR LOGIN</h1>
+            <p class="subtitle">
+                Login to acccess the resume dashboard screening
+            </p>
+            {% if error %}
+<p style="color:red;">
+    {{ error }}
+</p>
+{% endif %}
+            <form action="/login" method ="POST">
+                <label for="email">Email</label>
+                <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required>
+                <br><br>
+                <label for="password">Password</label>
+                <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required>
+                <br><br>
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+        </div>
+
+    </body>
+</html>
